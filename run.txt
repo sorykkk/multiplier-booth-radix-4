@@ -1,8 +1,8 @@
 # add all VHDL source files, separated by spaces
-set sourcefiles {rtl/parallel_adder.vhdl tb/parallel_adder_tb.vhdl}
+set sourcefiles {rtl/register_a.vhdl rtl/register_q.vhdl rtl/register_m.vhdl tb/registers_tb.vhdl}
 
 # set name of the top module (entity) for simulation
-set topmodule tb_parallel_adder
+set topmodule tb_registers
 
 ###################################################
 #####DO NOT MODIFY THE SCRIPT BELOW THIS LINE#####
