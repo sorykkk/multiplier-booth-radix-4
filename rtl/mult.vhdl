@@ -43,7 +43,7 @@ ARCHITECTURE rtl of mult IS
 
     -- semnale interne
     SIGNAL A       : BIT_VECTOR(width DOWNTO 0);
-    SIGNAL Q       : BIT_VECTOR(width+1 DOWNTO 0);
+    SIGNAL Q       : BIT_VECTOR(width DOWNTO 0);
     SIGNAL M       : BIT_VECTOR(width-1 DOWNTO 0);
     SIGNAL INV     : BIT_VECTOR(width DOWNTO 0);
     SIGNAL sum     : BIT_VECTOR(width DOWNTO 0);
