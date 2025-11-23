@@ -1,6 +1,6 @@
 ENTITY parallel_adder IS
 	GENERIC(
-		delay : TIME := 10 ns,
+		delay : TIME := 10 ns;
 		width : INTEGER := 32
 	);
 	PORT(
