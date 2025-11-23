@@ -48,7 +48,7 @@ ARCHITECTURE rtl of mult IS
     SIGNAL INV     : BIT_VECTOR(width DOWNTO 0);
     SIGNAL sum     : BIT_VECTOR(width DOWNTO 0);
     SIGNAL cnt     : BIT_VECTOR(cnt_width-1 DOWNTO 0);
-    SIGNAL cout    : BIT;
+    -- SIGNAL cout    : BIT;
 
     -- semnale de control
     SIGNAL is_cnt  : BIT;
@@ -96,7 +96,7 @@ BEGIN
             a    => INV,
             b    => A,
             sum  => sum,
-            cout => cout
+            cout => '0'
         );
     
     -- instantiem reg_m
@@ -157,18 +157,17 @@ BEGIN
             WIDTH => cnt_width
         )
         PORT MAP (
-            clk   => clk,
-            rst_b => rst_b,
-            ld    => c6,
-            clr   => c0,
-            out   => cnt
+            clk    => clk,
+            rst_b  => rst_b,
+            ld     => c6,
+            clr    => c0,
+            output => cnt
         );
     
     -- Instantiate control unit
     cntrl_inst : ENTITY work.ControlUnit
         GENERIC MAP (
-            delay => delay,
-            WIDTH => cnt_width
+            delay => delay
         )
         PORT MAP (
             clk   => clk,
@@ -182,7 +181,7 @@ BEGIN
             c6    => c6,
             c7    => c7,
             fin   => fin,
-            q_0   => Q(1 DOWNTO 0),
+            q_0   => Q(2 DOWNTO 0),
             cnt   => is_cnt
         );
 END ARCHITECTURE rtl;
