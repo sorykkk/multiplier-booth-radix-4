@@ -2,14 +2,14 @@ ENTITY tb_parallel_adder IS
 END ENTITY;
 
 ARCHITECTURE sim OF tb_parallel_adder IS
-    CONSTANT width : INTEGER := 4;
+    CONSTANT width : INTEGER := 4;	-- luam un width mai mic (de 5 biti) pentru a fi mai testabil
     SIGNAL cin  : BIT;
     SIGNAL a    : BIT_VECTOR(width DOWNTO 0);
     SIGNAL b    : BIT_VECTOR(width DOWNTO 0);
     SIGNAL sum  : BIT_VECTOR(width DOWNTO 0);
     SIGNAL cout : BIT;  
     
-    -- Helper function to convert BIT_VECTOR to STRING
+	-- functie ajutatoare pentru a converti din BIT_VECTOT in STRING
     FUNCTION to_string(bv : BIT_VECTOR) RETURN STRING IS
         VARIABLE result : STRING(1 TO bv'LENGTH);
         VARIABLE idx : INTEGER;
@@ -26,7 +26,7 @@ ARCHITECTURE sim OF tb_parallel_adder IS
         RETURN result;
     END FUNCTION;
     
-    -- Helper function to convert BIT to STRING
+	-- functie ajutatoare pentru a converti din BIT in STRING
     FUNCTION bit_to_string(b : BIT) RETURN STRING IS
     BEGIN
         IF b = '1' THEN
@@ -41,7 +41,7 @@ BEGIN
     uut : ENTITY work.parallel_adder
         GENERIC MAP (
             width => width,
-            delay => 0 ns
+            delay => 3 ns
         )
         PORT MAP (
             cin  => cin,
@@ -59,6 +59,7 @@ BEGIN
         b <= "00001";
         cin <= '0';
         WAIT FOR 10 ns;
+
         REPORT "TEST 1: a=" & to_string(a) &
                " b=" & to_string(b) &
                " cin=" & bit_to_string(cin) &
@@ -70,6 +71,7 @@ BEGIN
         b <= "00001";
         cin <= '1';
         WAIT FOR 10 ns;
+
         REPORT "TEST 2: a=" & to_string(a) &
                " b=" & to_string(b) &
                " cin=" & bit_to_string(cin) &
@@ -81,6 +83,7 @@ BEGIN
         b   <= (OTHERS => '1');
         cin <= '0';
         WAIT FOR 10 ns;
+		
         REPORT "TEST 3: a=" & to_string(a) &
                " b=" & to_string(b) &
                " cin=" & bit_to_string(cin) &
