@@ -1,0 +1,33 @@
+# add all VHDL source files, separated by spaces
+set sourcefiles {and_gate.vhd test.vhd}
+
+# set name of the top module (entity) for simulation
+set topmodule and_gate_tb
+
+###################################################
+#####DO NOT MODIFY THE SCRIPT BELOW THIS LINE#####
+###################################################
+
+# quit current simulation if any
+quit -sim
+
+# empty the work library if present
+if [file exists "work"] {vdel -all}
+# create a new work library
+vlib work
+
+# compile VHDL files
+if [catch "eval vcom $sourcefiles"] {
+    puts "correct the compilation errors"
+    return
+}
+
+# run the simulation
+vsim -voptargs=+acc $topmodule
+
+# adaugă semnalele la waveform
+add wave *
+
+# rulează simularea
+run -all
+
