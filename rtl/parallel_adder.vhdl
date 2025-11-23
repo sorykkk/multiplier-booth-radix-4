@@ -1,13 +1,13 @@
 ENTITY parallel_adder IS
 	GENERIC(
-		delay : TIME := 10ns,
+		delay : TIME := 10 ns,
 		width : INTEGER := 32
 	);
 	PORT(
 		cin  : IN  BIT;
 		a    : IN  BIT_VECTOR(width DOWNTO 0);
 		b    : IN  BIT_VECTOR(width DOWNTO 0);
-		sum  : OUT BIT_VECTOR(width DOWNTO 0;
+		sum  : OUT BIT_VECTOR(width DOWNTO 0);
 		cout : OUT BIT
 	);
 END ENTITY parallel_adder;
