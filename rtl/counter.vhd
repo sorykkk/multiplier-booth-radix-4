@@ -17,7 +17,6 @@ ARCHITECTURE behave OF Counter is
     SIGNAL out_reg : BIT_VECTOR(WIDTH-1 DOWNTO 0);
 BEGIN
 
-    output <= out_reg AFTER delay;
     PROCESS (clk, rst) 
         VARIABLE carry: BIT;
     BEGIN
@@ -35,5 +34,8 @@ BEGIN
                 END LOOP;
             END IF;
         END IF;
+
+        output <= out_reg AFTER delay;
     END PROCESS;
+    
 END ARCHITECTURE behave;

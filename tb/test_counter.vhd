@@ -15,7 +15,9 @@ BEGIN
 
     -- Instanțiere Counter
     UUT: ENTITY WORK.Counter
-        GENERIC MAP (WIDTH => WIDTH)
+        GENERIC MAP (
+            delay => 10 ns,
+            WIDTH => WIDTH)
         PORT MAP (
             clk    => clk,
             rst    => rst,
