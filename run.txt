@@ -1,8 +1,8 @@
 # add all VHDL source files, separated by spaces
-set sourcefiles {and_gate.vhd test.vhd}
+set sourcefiles {rtl/parallel_adder.vhdl tb/parallel_adder_tb.vhdl}
 
 # set name of the top module (entity) for simulation
-set topmodule and_gate_tb
+set topmodule tb_parallel_adder
 
 ###################################################
 #####DO NOT MODIFY THE SCRIPT BELOW THIS LINE#####
