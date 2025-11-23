@@ -8,12 +8,12 @@ ENTITY reg_a IS
         rst_b   : IN  BIT;
         clr     : IN  BIT;
         ld_obus : IN  BIT;
-        ls_sum  : IN  BIT;
+        ld_sum  : IN  BIT;
         sh_r    : IN  BIT;
         sh_i    : IN  BIT;
         sum     : IN  BIT_VECTOR(width DOWNTO 0);
         obus    : OUT BIT_VECTOR(width-1 DOWNTO 0);
-        a       : OUT BIT_VECTOR(width DOWNTO 0);
+        a       : OUT BIT_VECTOR(width DOWNTO 0)
     );
 END ENTITY reg_a;
 
@@ -35,6 +35,6 @@ BEGIN
     END PROCESS;
 
     -- logica combinationala pentru output bus
-    obus <= a_reg(width-1 DOWNTO 0) WHEN ld_obus = '1' ELSE (OTHERS => 'Z') AFTER delay;
+    obus <= a_reg(width-1 DOWNTO 0) WHEN ld_obus = '1' ELSE (OTHERS => '0') AFTER delay;
     a <= a_reg AFTER delay;
 END ARCHITECTURE rtl;

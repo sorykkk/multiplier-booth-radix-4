@@ -1,5 +1,5 @@
 # add all VHDL source files, separated by spaces
-set sourcefiles {rtl/register_a.vhdl tb/register_a_tb.vhdl}
+set sourcefiles {rtl/register_a.vhdl rtl/register_q.vhdl rtl/register_m.vhdl tb/registers_tb.vhdl}
 
 # set name of the top module (entity) for simulation
 set topmodule tb_registers
