@@ -1,5 +1,5 @@
 # add all VHDL source files, separated by spaces
-set sourcefiles {rtl/ControlUnit.vhdl rtl/counter.vhdl rtl/parallel_adder.vhdl rtl/register_a.vhdl rtl/register_q.vhdl rtl/register_m.vhdl tb/mult_tb.vhdl}
+set sourcefiles {rtl/ControlUnit.vhdl rtl/counter.vhdl rtl/parallel_adder.vhdl rtl/register_a.vhdl rtl/register_q.vhdl rtl/register_m.vhdl rtl/mult.vhdl tb/mult_tb.vhdl}
 
 # set name of the top module (entity) for simulation
 set topmodule tb_mult

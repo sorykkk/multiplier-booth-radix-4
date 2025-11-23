@@ -22,7 +22,7 @@ ARCHITECTURE rtl of mult IS
         VARIABLE temp   : INTEGER := n;
     BEGIN 
         WHILE temp > 1 LOOP
-            temp := temp >> 1;
+            temp := temp / 2;
             result := result + 1;
         END LOOP;
         RETURN result;
@@ -48,7 +48,7 @@ ARCHITECTURE rtl of mult IS
     SIGNAL INV     : BIT_VECTOR(width DOWNTO 0);
     SIGNAL sum     : BIT_VECTOR(width DOWNTO 0);
     SIGNAL cnt     : BIT_VECTOR(cnt_width-1 DOWNTO 0);
-    -- SIGNAL cout    : BIT;
+    SIGNAL cout    : BIT;
 
     -- semnale de control
     SIGNAL is_cnt  : BIT;
@@ -96,7 +96,7 @@ BEGIN
             a    => INV,
             b    => A,
             sum  => sum,
-            cout => '0'
+            cout => cout
         );
     
     -- instantiem reg_m
@@ -158,7 +158,7 @@ BEGIN
         )
         PORT MAP (
             clk    => clk,
-            rst_b  => rst_b,
+            rst  => rst_b,
             ld     => c6,
             clr    => c0,
             output => cnt
@@ -171,7 +171,7 @@ BEGIN
         )
         PORT MAP (
             clk   => clk,
-            rst_b => rst_b,
+            rst => rst_b,
             bgn   => bgn,
             c0    => c0,
             c2    => c2,

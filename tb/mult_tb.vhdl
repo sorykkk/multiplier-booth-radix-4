@@ -61,11 +61,11 @@ BEGIN
     
     -- generator de clock: se va schimba fiecare `clk_period`/2 pentru `clk_cycles` ori
     clk_gen: PROCESS 
-        VARIABLE cycles_count : INTEGER := 0;
+        VARIABLE cycle_count : INTEGER := 0;
     BEGIN 
-        WHILE cycle_count < CLK_CYCLES * 2 LOOP
+        WHILE cycle_count < clk_cycles * 2 LOOP
             clk <= NOT clk;
-            WAIT FOR CLK_PERIOD / 2;
+            WAIT FOR clk_period / 2;
             cycle_count := cycle_count + 1;
         END LOOP;
         REPORT "Clock generation completed after " & INTEGER'IMAGE(CLK_CYCLES) & " cycles";
@@ -76,7 +76,7 @@ BEGIN
     rst_seq: PROCESS
     BEGIN
         rst_b <= '0';
-        WAIT FOR RST_PULSE;
+        WAIT FOR rst_pulse;
         rst_b <= '1';
         REPORT "Reset released at time " & TIME'IMAGE(NOW);
         WAIT;
@@ -86,7 +86,7 @@ BEGIN
     bgn_seq: PROCESS
     BEGIN
         bgn <= '0';
-        WAIT FOR RST_PULSE;
+        WAIT FOR rst_pulse;
         bgn <= '1';
         REPORT "Begin signal asserted at time " & TIME'IMAGE(NOW);
         WAIT;
