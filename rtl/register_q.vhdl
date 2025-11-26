@@ -34,6 +34,7 @@ BEGIN
     END PROCESS;
     
     -- logica combinationala pentru output bus
-    obus <= q_reg(width DOWNTO 1) WHEN ld_obus = '1' ELSE (OTHERS => '0') AFTER delay;
+    -- obus <= q_reg(width DOWNTO 1) WHEN ld_obus = '1' ELSE (OTHERS => '0') AFTER delay;
+    obus <= q_reg(width DOWNTO 1) AFTER delay WHEN ld_obus = '1';
     q <= q_reg AFTER delay;
 END ARCHITECTURE rtl;
