@@ -38,12 +38,7 @@ ARCHITECTURE behave OF ControlUnit is
         S9
     );
 
-    ATTRIBUTE enum_encoding : STRING;
-    ATTRIBUTE enum_encoding OF state_e : TYPE IS
-        "0000 0001 0010 0011 0100 0101 0110 0111 1000 1001 1010";
-
     SIGNAL state, next_state : state_e;
-
 
     -- FUNCTION state_to_vector(s : state_e) RETURN BIT_VECTOR IS
     -- BEGIN
@@ -61,7 +56,6 @@ ARCHITECTURE behave OF ControlUnit is
     --         WHEN S9    => RETURN "1010";
     --     END CASE;
     -- END FUNCTION;
-
 
 begin
 
