@@ -6,7 +6,7 @@ ARCHITECTURE sim OF tb_mult IS
     CONSTANT delay : TIME := 3 ns;
 
     CONSTANT clk_period : TIME := 100 ns;
-    CONSTANT clk_cycles : INTEGER := 1000;
+    CONSTANT clk_cycles : INTEGER := 400;
     CONSTANT rst_pulse  : TIME := 25 ns;
 
     -- semnale de test
@@ -20,8 +20,18 @@ ARCHITECTURE sim OF tb_mult IS
     SIGNAL obusB : BIT_VECTOR(WIDTH-1 DOWNTO 0);
 
     -- valorile de test
-    CONSTANT X : BIT_VECTOR(width-1 DOWNTO 0) := "0000000000000111"; -- 7
-    CONSTANT Y : BIT_VECTOR(width-1 DOWNTO 0) := "0000000000000101"; -- 5
+    CONSTANT X1 : BIT_VECTOR(width-1 DOWNTO 0) := "0000000000000111"; -- 7
+    CONSTANT Y1 : BIT_VECTOR(width-1 DOWNTO 0) := "0000000000000101"; -- 5
+
+    CONSTANT X2 : BIT_VECTOR(width-1 DOWNTO 0) := "0000000000001001"; -- 9
+    CONSTANT Y2 : BIT_VECTOR(width-1 DOWNTO 0) := "0000000001101000"; -- 104
+
+    CONSTANT X3 : BIT_VECTOR(width-1 DOWNTO 0) := "0000000011011001"; -- 217
+    CONSTANT Y3 : BIT_VECTOR(width-1 DOWNTO 0) := "0000000010010111"; -- 151
+
+    CONSTANT X4 : BIT_VECTOR(width-1 DOWNTO 0) := "0000000011011001"; -- 217
+    CONSTANT Y4 : BIT_VECTOR(width-1 DOWNTO 0) := "0000000110011000"; -- 408
+
     -- expected output: 0000 0000 0010 0011 (35)
 
     -- functie ajutatoare pentru a converti din BIT_VECTOT in STRING
@@ -82,49 +92,100 @@ BEGIN
         WAIT;
     END PROCESS rst_seq;
 
-    -- Incepem secventa de semnale: bgn = 0, apoi il setam dupa RST_PULSE
-    bgn_seq: PROCESS
-    BEGIN
-        bgn <= '0';
-        WAIT FOR rst_pulse;
-        bgn <= '1';
-        REPORT "Begin signal asserted at time " & TIME'IMAGE(NOW);
-        WAIT;
-    END PROCESS bgn_seq;
-    
     -- Input bus sequence
     input_seq: PROCESS
     BEGIN
+        -- Test 1
         ibusA <= (OTHERS => '0');
         ibusB <= (OTHERS => '0');
         WAIT FOR 200 ns;
         
-        ibusA <= X;
-        REPORT "Set ibusA = " & to_string(X) & " (101 in decimal) at time " & TIME'IMAGE(NOW);
+        ibusA <= X1;
+        REPORT "Set ibusA = " & to_string(X1) & " (7 in decimal) at time " & TIME'IMAGE(NOW);
         WAIT FOR 200 ns;
         
-        ibusB <= Y;
-        REPORT "Set ibusB = " & to_string(Y) & " (63 in decimal) at time " & TIME'IMAGE(NOW);
+        ibusB <= Y1;
+        REPORT "Set ibusB = " & to_string(Y1) & " (5 in decimal) at time " & TIME'IMAGE(NOW);
+
+        bgn <= '1';
+        WAIT FOR 100 ns;
+        bgn <= '0';
+
+        WAIT UNTIL fin = '1';
+        WAIT FOR 200 ns;  -- Dam timp sa printeze output
+
+        -- Test 2
+        ibusA <= (OTHERS => '0');
+        ibusB <= (OTHERS => '0');
         WAIT FOR 200 ns;
+        
+        ibusA <= X2;
+        REPORT "Set ibusA = " & to_string(X2) & " (9 in decimal) at time " & TIME'IMAGE(NOW);
+        WAIT FOR 200 ns;
+        
+        ibusB <= Y2;
+        REPORT "Set ibusB = " & to_string(Y2) & " (104 in decimal) at time " & TIME'IMAGE(NOW);
+        
+        bgn <= '1';
+        WAIT FOR 100 ns;  -- un ciclu clock
+        bgn <= '0';
+
+        WAIT UNTIL fin = '1';
+        WAIT FOR 200 ns;  -- Dam timp sa printeze output
+
+        -- Test 3
+        ibusA <= (OTHERS => '0');
+        ibusB <= (OTHERS => '0');
+        WAIT FOR 200 ns;
+        
+        ibusA <= X3;
+        REPORT "Set ibusA = " & to_string(X3) & " (217 in decimal) at time " & TIME'IMAGE(NOW);
+        WAIT FOR 200 ns;
+        
+        ibusB <= Y3;
+        REPORT "Set ibusB = " & to_string(Y3) & " (151 in decimal) at time " & TIME'IMAGE(NOW);
+        bgn <= '1';
+        WAIT FOR 100 ns;  -- One clock cycle
+        bgn <= '0';
+
+        WAIT UNTIL fin = '1';
+        WAIT FOR 200 ns;  -- Dam timp sa printeze output
+
+        -- Test 4
+        ibusA <= (OTHERS => '0');
+        ibusB <= (OTHERS => '0');
+        WAIT FOR 200 ns;
+        
+        ibusA <= X4;
+        REPORT "Set ibusA = " & to_string(X4) & " (217 in decimal) at time " & TIME'IMAGE(NOW);
+        WAIT FOR 200 ns;
+        
+        ibusB <= Y4;
+        REPORT "Set ibusB = " & to_string(Y4) & " (408 in decimal) at time " & TIME'IMAGE(NOW);
+        bgn <= '1';
+        WAIT FOR 100 ns;  -- One clock cycle
+        bgn <= '0';
+
+        WAIT UNTIL fin = '1';
+        WAIT FOR 200 ns;  -- Dam timp sa printeze output
+
+
         
         REPORT "Input sequence completed";
         WAIT;
     END PROCESS input_seq;
     
-    -- Monitor output and status
+    -- Monitor output si status
     out_seq: PROCESS
     BEGIN
         WAIT FOR 10 ns;
         LOOP
-            IF fin = '1' THEN
-                REPORT "Multiplication finished at time " & TIME'IMAGE(NOW);
-                REPORT "  obusA = " & to_string(obusA);
-                REPORT "  obusB = " & to_string(obusB);
-                EXIT;
-            END IF;
-            WAIT FOR 100 ns;
+            WAIT UNTIL fin = '1';  -- Wait for fin to go high
+            REPORT "Multiplication finished at time " & TIME'IMAGE(NOW);
+            REPORT "  obusA = " & to_string(obusA);
+            REPORT "  obusB = " & to_string(obusB);
+            WAIT UNTIL fin = '0';  -- Wait for fin to go low before next iteration
         END LOOP;
-        WAIT;
     END PROCESS out_seq;
 
 END ARCHITECTURE sim;
